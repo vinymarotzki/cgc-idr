@@ -41,14 +41,15 @@
 - Produces: `IdrRedeMetrics`, `IdrRecord`, `mapMessageToIdrRecord(message: SasiProviderMessage): IdrRecord | null` from `idr-mapper.ts`. Task 2 imports `mapMessageToIdrRecord` and the types from `idr-mapper.ts`.
 - Consumes: `SasiDataField`, `SasiProviderMessage` from `@/lib/sasi-api/types` (already exists, unmodified).
 
-- [ ] **Step 1: Create the branch**
+- [ ] **Step 1: Work inside the isolated worktree**
 
-```bash
-cd /c/Users/SASI/cgc-atividades
-git checkout develop
-git pull
-git checkout -b FIX/add-idr-channel-endpoint
+The branch and worktree already exist — created off `develop` before this plan's execution started. Do all work for Tasks 1-2 inside:
+
 ```
+C:\Users\SASI\cgc-atividades\.worktrees\FIX-add-idr-channel-endpoint
+```
+
+on branch `FIX/add-idr-channel-endpoint`. This worktree has its own copy of `.env.local` (copied from the main checkout) so `npm run dev` and `SASI_API_TOKEN` work without touching the user's other checkout. Do not create a new branch or worktree.
 
 - [ ] **Step 2: Add vitest**
 
@@ -511,7 +512,13 @@ Leave the PR open for review/merge (do not merge automatically). Note in chat th
 
 ## Part B — cgc-idr (new repo: `C:\Users\SASI\cgc-idr`)
 
-Repo already exists locally (git initialized, spec committed). All paths below are relative to `C:\Users\SASI\cgc-idr`.
+Repo already exists on GitHub (`vinymarotzki/cgc-idr`, private) with `main` and `develop` pushed. Tasks 3-7 happen on branch `FIX/scaffold-idr-dashboard` (already created off `develop`), inside the isolated worktree:
+
+```
+C:\Users\SASI\cgc-idr\.worktrees\FIX-scaffold-idr-dashboard
+```
+
+All paths below are relative to that worktree directory, not the main `cgc-idr` checkout. Do not create a new branch or worktree, and do not work in the main checkout.
 
 ### Task 3: Project scaffold
 
@@ -1815,15 +1822,27 @@ git commit -m "feat: dashboard do IDR (cards, gráfico, seletor de ano/rede)"
 
 ### Task 8: Deploy (requires interactive login — run with the user present)
 
-This task needs `gh`, `vercel`, and `turso` CLI sessions logged in as the user's own accounts. Do not attempt to run these non-interactively; walk through them with the user watching, confirming each side-effecting step (repo creation, secret values, production deploy) before it runs, per the "risky actions" guidance — creating a public GitHub repo, writing secrets to Vercel, and deploying to production are all visible/hard-to-reverse actions.
+This task needs `vercel` and `turso` CLI sessions logged in as the user's own accounts (`gh` is already authenticated as `vinymarotzki` and the repo/branches already exist). Do not attempt to run these non-interactively; walk through them with the user watching, confirming each side-effecting step (secret values, production deploy) before it runs, per the "risky actions" guidance — writing secrets to Vercel and deploying to production are visible/hard-to-reverse actions.
 
-- [ ] **Step 1: Create the GitHub repo and push**
+- [ ] **Step 1: Open the PR for the scaffold/dashboard branch and merge it into develop**
+
+Repo `vinymarotzki/cgc-idr` (private) and branches `main`/`develop` already exist and are pushed. Tasks 3-7 happened on `FIX/scaffold-idr-dashboard`, in `.worktrees/FIX-scaffold-idr-dashboard` — push it and open the PR from the main checkout (not the worktree):
 
 ```bash
 cd /c/Users/SASI/cgc-idr
-gh repo create cgc-idr --private --source=. --remote=origin
-git push -u origin main
+git push -u origin FIX/scaffold-idr-dashboard
+gh pr create --base develop --head FIX/scaffold-idr-dashboard --title "Scaffold do dashboard cgc-idr" --body "## Summary
+- Scaffold Next.js + TS + Tailwind, schema Turso (idr_snapshots), cálculo puro do IDR.
+- Rota /api/idr/dashboard: sync sob demanda do cgc-atividades + fallback pro cache do Turso.
+- Dashboard (cards + gráfico de linha REE/REME/RPE), com seed de dados fictícios pra QA visual (canal 36602 ainda sem mensagens reais).
+
+## Test plan
+- [x] \`npx vitest run\` (Tasks 4-5)
+- [x] Verificação manual do dashboard com dados seedados (Task 7)
+- [x] Fallback de cache do Turso verificado (Task 7)"
 ```
+
+Leave the PR open for review/merge — do not merge automatically. Once merged into `develop`, promote `develop` to `main` as a separate, deliberate step (`git checkout main && git merge develop && git push`), matching `cgc-atividades`'s convention.
 
 - [ ] **Step 2: Create the Turso database**
 
