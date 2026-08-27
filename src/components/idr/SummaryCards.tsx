@@ -33,10 +33,10 @@ export function SummaryCards({
   indicadores: Record<Rede, RedeIndicador>;
 }) {
   return (
-    <div className="rounded-xl border border-idr-border bg-idr-card p-5">
+    <div className="rounded-xl border border-idr-border bg-idr-card p-4 sm:p-5 w-full">
       <p className="text-sm text-idr-text-muted mb-4">Ano {ano}</p>
 
-      <div className="max-h-80 overflow-y-auto pr-1 space-y-4">
+      <div className="max-h-72 sm:max-h-80 overflow-y-auto pr-1 space-y-3 sm:space-y-4">
         {REDE_ORDER.map((rede) => {
           const indicador = indicadores[rede];
           const favoravel = indicador.resultado === "Favoravel";
@@ -48,20 +48,22 @@ export function SummaryCards({
                 : "text-idr-municipal";
 
           return (
-            <div key={rede} className="rounded-lg border border-idr-border p-4">
+            <div key={rede} className="rounded-lg border border-idr-border p-3 sm:p-4">
               <p className="text-sm text-idr-text mb-3">{REDE_LABELS[rede]}</p>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <div>
                   <p className="text-xs text-idr-text-muted mb-1">IDR / {REDE_SIGLA[rede]}</p>
-                  <p className="text-lg font-semibold">{formatNumber(indicador.idr)}</p>
+                  <p className="text-base sm:text-lg font-semibold">{formatNumber(indicador.idr)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-idr-text-muted mb-1">Variação</p>
-                  <p className={`text-lg font-semibold ${corResultado}`}>{formatPercent(indicador.variacao)}</p>
+                  <p className={`text-base sm:text-lg font-semibold ${corResultado}`}>
+                    {formatPercent(indicador.variacao)}
+                  </p>
                 </div>
-                <div>
+                <div className="col-span-2 sm:col-span-1">
                   <p className="text-xs text-idr-text-muted mb-1">Resultado</p>
-                  <p className={`text-lg font-semibold ${corResultado}`}>
+                  <p className={`text-base sm:text-lg font-semibold ${corResultado}`}>
                     {indicador.resultado === null ? "—" : favoravel ? "Favorável" : "Desfavorável"}
                   </p>
                 </div>

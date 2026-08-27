@@ -71,7 +71,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="p-8 max-w-4xl mx-auto">
+    <main className="p-4 sm:p-8 max-w-4xl mx-auto">
       <h1 className="text-sm text-idr-text-muted uppercase tracking-wide mb-4">
         Índice de Desempenho Reativo (IDR)
       </h1>
