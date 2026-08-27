@@ -119,7 +119,7 @@ export function IdrLineChart({
             <Line
               type="linear"
               dataKey="meta"
-              name="Meta (10%)"
+              name="CBM"
               stroke={META_COLOR}
               strokeWidth={2}
               strokeDasharray="6 4"
