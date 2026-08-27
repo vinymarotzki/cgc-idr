@@ -21,6 +21,7 @@ interface ChartPoint {
   estadualVariacao: number | null;
   municipalVariacao: number | null;
   particularVariacao: number | null;
+  meta: number;
 }
 
 const SERIES: { key: Rede; variacaoKey: keyof ChartPoint; label: string; color: string }[] = [
@@ -28,6 +29,8 @@ const SERIES: { key: Rede; variacaoKey: keyof ChartPoint; label: string; color: 
   { key: "municipal", variacaoKey: "municipalVariacao", label: "REME", color: "#EF4444" },
   { key: "particular", variacaoKey: "particularVariacao", label: "RPE", color: "#F5A623" },
 ];
+
+const META_COLOR = "#3B82F6";
 
 function formatIdr(value: unknown): string {
   return typeof value === "number"
@@ -68,10 +71,16 @@ function ChartTooltip({ active, label, payload }: ChartTooltipProps) {
   );
 }
 
-export function IdrLineChart({ data }: { data: ChartPoint[] }) {
+export function IdrLineChart({
+  data,
+  title = "Evolução do IDR por rede",
+}: {
+  data: ChartPoint[];
+  title?: string;
+}) {
   return (
     <div className="rounded-xl border border-idr-border bg-idr-card p-4 sm:p-5">
-      <p className="text-sm text-idr-text-muted mb-4">Evolução do IDR por rede</p>
+      <p className="text-sm text-idr-text-muted mb-4">{title}</p>
 
       <div className="h-64 sm:h-80">
         <ResponsiveContainer width="100%" height="100%">
@@ -107,6 +116,17 @@ export function IdrLineChart({ data }: { data: ChartPoint[] }) {
                 connectNulls
               />
             ))}
+            <Line
+              type="linear"
+              dataKey="meta"
+              name="CBM"
+              stroke={META_COLOR}
+              strokeWidth={2}
+              strokeDasharray="6 4"
+              dot={false}
+              activeDot={false}
+              legendType="circle"
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
