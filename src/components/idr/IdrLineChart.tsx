@@ -21,6 +21,7 @@ interface ChartPoint {
   estadualVariacao: number | null;
   municipalVariacao: number | null;
   particularVariacao: number | null;
+  meta: number;
 }
 
 const SERIES: { key: Rede; variacaoKey: keyof ChartPoint; label: string; color: string }[] = [
@@ -28,6 +29,8 @@ const SERIES: { key: Rede; variacaoKey: keyof ChartPoint; label: string; color: 
   { key: "municipal", variacaoKey: "municipalVariacao", label: "REME", color: "#EF4444" },
   { key: "particular", variacaoKey: "particularVariacao", label: "RPE", color: "#F5A623" },
 ];
+
+const META_COLOR = "#3B82F6";
 
 function formatIdr(value: unknown): string {
   return typeof value === "number"
@@ -113,6 +116,17 @@ export function IdrLineChart({
                 connectNulls
               />
             ))}
+            <Line
+              type="linear"
+              dataKey="meta"
+              name="Meta (10%)"
+              stroke={META_COLOR}
+              strokeWidth={2}
+              strokeDasharray="6 4"
+              dot={false}
+              activeDot={false}
+              legendType="circle"
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>

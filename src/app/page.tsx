@@ -8,6 +8,8 @@ import { InfoDialogButton } from "@/components/idr/InfoDialogButton";
 import type { Categoria, DashboardPayload } from "@/lib/idr/types";
 import { CATEGORIA_LABELS } from "@/lib/idr/labels";
 
+const META_ANUAL = 10;
+
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardPayload | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -37,6 +39,7 @@ export default function DashboardPage() {
       estadualVariacao: data.geral[year]?.estadual?.variacao ?? null,
       municipalVariacao: data.geral[year]?.municipal?.variacao ?? null,
       particularVariacao: data.geral[year]?.particular?.variacao ?? null,
+      meta: META_ANUAL,
     }));
   }, [data]);
 
@@ -50,6 +53,7 @@ export default function DashboardPage() {
       estadualVariacao: data.porTipo[categoria][year]?.estadual?.variacao ?? null,
       municipalVariacao: data.porTipo[categoria][year]?.municipal?.variacao ?? null,
       particularVariacao: data.porTipo[categoria][year]?.particular?.variacao ?? null,
+      meta: META_ANUAL,
     }));
   }, [data, categoria]);
 
