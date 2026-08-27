@@ -1,16 +1,5 @@
 import type { Rede, RedeIndicador } from "@/lib/idr/types";
-
-const REDE_LABELS: Record<Rede, string> = {
-  estadual: "Rede Estadual de Ensino (REE)",
-  municipal: "Rede Municipal de Ensino (REME)",
-  particular: "Rede Particular de Ensino (RPE)",
-};
-
-const REDE_SIGLA: Record<Rede, string> = {
-  estadual: "REE",
-  municipal: "REME",
-  particular: "RPE",
-};
+import { REDE_LABELS, REDE_SIGLA } from "@/lib/idr/labels";
 
 const REDE_ORDER: Rede[] = ["estadual", "municipal", "particular"];
 

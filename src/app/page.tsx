@@ -6,13 +6,7 @@ import { SummaryCards } from "@/components/idr/SummaryCards";
 import { IdrLineChart } from "@/components/idr/IdrLineChart";
 import { FonteDadosDialog } from "@/components/idr/FonteDadosDialog";
 import type { Categoria, DashboardPayload } from "@/lib/idr/types";
-
-const CATEGORIA_LABELS: Record<Categoria, string> = {
-  praticaDesportiva: "Prática desportiva",
-  emergenciasClinicas: "Emergências clínicas",
-  quedas: "Quedas de pessoas",
-  acidentesDiversos: "Acidentes diversos",
-};
+import { CATEGORIA_LABELS } from "@/lib/idr/labels";
 
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardPayload | null>(null);
