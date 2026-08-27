@@ -1,2 +1,5 @@
 # Worktrees isolados de execução de plano (subagent-driven-development)
 .worktrees/
+
+.vercel
+.env*
