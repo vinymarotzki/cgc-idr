@@ -46,9 +46,15 @@ export function SummaryCards({
               : favoravel
                 ? "text-idr-estadual"
                 : "text-idr-municipal";
+          const corBorda =
+            indicador.resultado === null
+              ? "border-idr-border"
+              : favoravel
+                ? "border-idr-estadual"
+                : "border-idr-municipal";
 
           return (
-            <div key={rede} className="rounded-lg border border-idr-border p-3 sm:p-4">
+            <div key={rede} className={`rounded-lg border-2 ${corBorda} p-3 sm:p-4`}>
               <p className="text-sm text-idr-text mb-3">{REDE_LABELS[rede]}</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <div>
