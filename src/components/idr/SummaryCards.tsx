@@ -25,7 +25,12 @@ function formatPercent(value: number | null): string {
 
 export function SummaryCards({ rede, ano, indicador }: { rede: Rede; ano: number; indicador: RedeIndicador }) {
   const favoravel = indicador.resultado === "Favoravel";
-  const corResultado = favoravel ? "text-idr-estadual" : "text-idr-municipal";
+  const corResultado =
+    indicador.resultado === null
+      ? "text-idr-text-muted"
+      : indicador.resultado === "Favoravel"
+        ? "text-idr-estadual"
+        : "text-idr-municipal";
 
   return (
     <div className="rounded-xl border border-idr-border bg-idr-card p-5">
