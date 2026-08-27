@@ -79,7 +79,7 @@ export function buildDashboardPayload(
       geral[ano][rede] = geralIndicador;
       // Only update anterior tracking if this ano/rede had actual data, so that
       // a gap ano doesn't overwrite the tracked anterior with null
-      if (row) {
+      if (geralIndicador.idr !== null) {
         idrGeralAnterior[rede] = geralIndicador.idr;
       }
 
@@ -92,7 +92,7 @@ export function buildDashboardPayload(
         );
         porTipo[categoria][ano][rede] = indicador;
         // Only update anterior tracking if this ano/rede had actual data
-        if (row) {
+        if (indicador.idr !== null) {
           idrTipoAnterior[categoria][rede] = indicador.idr;
         }
       }

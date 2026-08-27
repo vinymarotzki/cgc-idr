@@ -77,8 +77,8 @@ describe("buildDashboardPayload", () => {
   });
 
   it("preserves rede's anterior IDR when skipping a gap ano with no data", () => {
-    // Simulate: estadual has data in 2024 and 2026, but NOT 2025
-    //          municipal has data in 2025 (so 2025 stays in anos list)
+    // Simulate: estadual has data in 2024 and 2026, but 2025 is a gap year
+    //           (row exists but has estudantes: 0, which makes calculateIdr return null)
     const testRows: IdrSnapshotRow[] = [
       row({
         ano: 2024,
@@ -88,9 +88,9 @@ describe("buildDashboardPayload", () => {
       }),
       row({
         ano: 2025,
-        rede: "municipal",
-        ocorrenciasTotal: 50,
-        estudantes: 500,
+        rede: "estadual",
+        ocorrenciasTotal: 0,
+        estudantes: 0,
       }),
       row({
         ano: 2026,
@@ -110,7 +110,7 @@ describe("buildDashboardPayload", () => {
     expect(estadual2024.idr).not.toBeNull();
     const idr2024 = estadual2024.idr;
 
-    // At ano 2025, estadual has no data -> idr should be null, variacao should be null
+    // At ano 2025, estadual has zero data -> idr should be null, variacao should be null
     const estadual2025 = payload.geral[2025].estadual;
     expect(estadual2025.idr).toBeNull();
     expect(estadual2025.variacao).toBeNull();

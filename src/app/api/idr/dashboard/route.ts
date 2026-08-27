@@ -10,7 +10,7 @@ import { fetchRemoteIdrRecords } from "@/lib/idr/sync";
 import { listSnapshots, upsertSnapshotsFromRemote } from "@/lib/idr/repository";
 import { buildDashboardPayload } from "@/lib/idr/aggregate";
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 export async function GET() {
   let syncOk = true;
