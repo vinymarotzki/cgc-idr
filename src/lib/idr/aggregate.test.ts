@@ -120,7 +120,7 @@ describe("buildDashboardPayload", () => {
     expect(estadual2026.idr).not.toBeNull();
     expect(estadual2026.variacao).not.toBeNull();
     // Verify variacao is computed against 2024's idr, not null
-    const expected2026Variacao = ((estadual2026.idr - idr2024) / idr2024) * 100;
+    const expected2026Variacao = ((estadual2026.idr! - idr2024!) / idr2024!) * 100;
     expect(estadual2026.variacao).toBeCloseTo(expected2026Variacao, 2);
   });
 });
