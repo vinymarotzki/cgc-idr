@@ -25,33 +25,65 @@ const SERIES: { key: Rede; label: string; color: string }[] = [
   { key: "particular", label: "RPE", color: "#F5A623" },
 ];
 
+function formatIdr(value: unknown): string {
+  return typeof value === "number"
+    ? value.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : String(value ?? "—");
+}
+
 export function IdrLineChart({ data }: { data: ChartPoint[] }) {
   return (
-    <div className="rounded-xl border border-idr-border bg-idr-card p-5 h-80">
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#232B41" />
-          <XAxis dataKey="ano" stroke="#7A82A0" />
-          <YAxis stroke="#7A82A0" domain={["auto", "auto"]} />
-          <Tooltip
-            contentStyle={{ background: "#141A29", border: "1px solid #232B41", color: "#E8EAF0" }}
-            formatter={(value) => (typeof value === "number" ? value.toFixed(2) : value)}
-          />
-          <Legend />
-          {SERIES.map((series) => (
-            <Line
-              key={series.key}
-              type="monotone"
-              dataKey={series.key}
-              name={series.label}
-              stroke={series.color}
-              strokeWidth={2}
-              dot={{ r: 4 }}
-              connectNulls
+    <div className="rounded-xl border border-idr-border bg-idr-card p-4 sm:p-5">
+      <p className="text-sm text-idr-text-muted mb-4">Evolução do IDR por rede</p>
+
+      <div className="h-64 sm:h-80">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data} margin={{ top: 4, right: 12, left: -12, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#232B41" vertical={false} />
+            <XAxis dataKey="ano" stroke="#7A82A0" tick={{ fontSize: 12, fill: "#7A82A0" }} tickLine={false} axisLine={{ stroke: "#232B41" }} />
+            <YAxis
+              stroke="#7A82A0"
+              domain={["auto", "auto"]}
+              tick={{ fontSize: 12, fill: "#7A82A0" }}
+              tickLine={false}
+              axisLine={false}
+              width={48}
             />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+            <Tooltip
+              contentStyle={{
+                background: "#141A29",
+                border: "1px solid #232B41",
+                borderRadius: 8,
+                color: "#E8EAF0",
+                fontSize: 13,
+              }}
+              labelStyle={{ color: "#7A82A0", marginBottom: 4 }}
+              labelFormatter={(ano) => `Ano ${ano}`}
+              formatter={(value, name) => [formatIdr(value), name]}
+            />
+            <Legend
+              verticalAlign="bottom"
+              align="center"
+              iconType="circle"
+              iconSize={9}
+              wrapperStyle={{ paddingTop: 16, fontSize: 13, color: "#E8EAF0" }}
+            />
+            {SERIES.map((series) => (
+              <Line
+                key={series.key}
+                type="monotone"
+                dataKey={series.key}
+                name={series.label}
+                stroke={series.color}
+                strokeWidth={2}
+                dot={{ r: 4 }}
+                activeDot={{ r: 6 }}
+                connectNulls
+              />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }
