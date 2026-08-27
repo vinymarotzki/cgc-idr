@@ -48,27 +48,16 @@ export default function DashboardPage() {
 
   if (!data) {
     return (
-      <main className="p-8 max-w-4xl mx-auto">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="h-4 w-4 rounded-full border-2 border-idr-border border-t-idr-estadual animate-spin" />
-          <h1 className="text-sm text-idr-text-muted uppercase tracking-wide">
+      <main className="min-h-screen flex flex-col items-center justify-center gap-5 p-6 text-center">
+        <span className="h-14 w-14 sm:h-20 sm:w-20 rounded-full border-4 sm:border-[6px] border-idr-border border-t-idr-estadual animate-spin" />
+        <div className="space-y-2">
+          <h1 className="text-base sm:text-xl text-idr-text uppercase tracking-wide font-semibold">
             Carregando IDR…
           </h1>
+          <p className="text-xs sm:text-sm text-idr-text-muted">
+            Sincronizando dados do canal 36602
+          </p>
         </div>
-
-        <div className="flex gap-2 mb-5">
-          <div className="h-8 w-24 rounded-md bg-idr-card animate-pulse" />
-          <div className="h-8 w-28 rounded-md bg-idr-card animate-pulse" />
-          <div className="h-8 w-20 rounded-md bg-idr-card animate-pulse" />
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="h-24 rounded-lg border border-idr-border bg-idr-card animate-pulse" />
-          ))}
-        </div>
-
-        <div className="h-64 rounded-lg border border-idr-border bg-idr-card animate-pulse" />
       </main>
     );
   }
