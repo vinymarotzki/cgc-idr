@@ -11,7 +11,7 @@ export function calculateIdr(ocorrencias: number, estudantes: number): number | 
 
 export function calculateVariacao(atual: number | null, anterior: number | null): number | null {
   if (atual === null || anterior === null || anterior === 0) return null;
-  return ((atual - anterior) / anterior) * 100;
+  return (atual / anterior) * 100 - 100;
 }
 
 export type Resultado = "Favoravel" | "Desfavoravel";
