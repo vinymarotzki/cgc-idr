@@ -68,6 +68,9 @@ export default function DashboardPage() {
     );
   }
 
+  const anoIndex = data.anos.indexOf(ano);
+  const anoAnterior = anoIndex > 0 ? data.anos[anoIndex - 1] : null;
+
   return (
     <main className="p-4 sm:p-8 max-w-4xl mx-auto">
       <h1 className="text-sm text-idr-text-muted uppercase tracking-wide mb-4">
@@ -84,13 +87,13 @@ export default function DashboardPage() {
 
       <div className="space-y-5">
         {tab === "geral" ? (
-          <SummaryCards ano={ano} indicadores={data.geral[ano]} />
+          <SummaryCards ano={ano} anoAnterior={anoAnterior} indicadores={data.geral[ano]} />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {(Object.keys(CATEGORIA_LABELS) as Categoria[]).map((categoria) => (
               <div key={categoria}>
                 <p className="text-xs text-idr-text-muted mb-2">{CATEGORIA_LABELS[categoria]}</p>
-                <SummaryCards ano={ano} indicadores={data.porTipo[categoria][ano]} />
+                <SummaryCards ano={ano} anoAnterior={anoAnterior} indicadores={data.porTipo[categoria][ano]} />
               </div>
             ))}
           </div>
