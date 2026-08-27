@@ -58,7 +58,7 @@ describe("buildDashboardPayload", () => {
   it("computes variacao and resultado against the previous ano", () => {
     const payload = buildDashboardPayload(rows);
     const indicador = payload.geral[2025].estadual;
-    expect(indicador.variacao).toBeCloseTo(10.13, 1);
+    expect(indicador.variacao).toBeCloseTo(-9.21, 1);
     expect(indicador.resultado).toBe("Favoravel");
   });
 
@@ -120,7 +120,7 @@ describe("buildDashboardPayload", () => {
     expect(estadual2026.idr).not.toBeNull();
     expect(estadual2026.variacao).not.toBeNull();
     // Verify variacao is computed against 2024's idr, not null
-    const expected2026Variacao = (idr2024! / estadual2026.idr! - 1) * 100;
+    const expected2026Variacao = (estadual2026.idr! / idr2024!) * 100 - 100;
     expect(estadual2026.variacao).toBeCloseTo(expected2026Variacao, 2);
   });
 });

@@ -13,7 +13,7 @@ describe("calculateIdr", () => {
 
 describe("calculateVariacao", () => {
   it("computes percentage change between two IDR values", () => {
-    expect(calculateVariacao(22.5, 25)).toBeCloseTo(11.11, 1);
+    expect(calculateVariacao(22.5, 25)).toBeCloseTo(-10, 5);
   });
 
   it("returns null when there is no anterior value", () => {
@@ -24,18 +24,18 @@ describe("calculateVariacao", () => {
     expect(calculateVariacao(null, 25)).toBeNull();
   });
 
-  it("returns null when atual is 0 (division by zero)", () => {
-    expect(calculateVariacao(0, 10)).toBeNull();
+  it("returns null when anterior is 0 (division by zero)", () => {
+    expect(calculateVariacao(10, 0)).toBeNull();
   });
 });
 
 describe("resultadoFromVariacao", () => {
-  it("is Favoravel when variacao is positive", () => {
-    expect(resultadoFromVariacao(9.12)).toBe("Favoravel");
+  it("is Favoravel when variacao is negative", () => {
+    expect(resultadoFromVariacao(-9.12)).toBe("Favoravel");
   });
 
-  it("is Desfavoravel when variacao is negative", () => {
-    expect(resultadoFromVariacao(-5)).toBe("Desfavoravel");
+  it("is Desfavoravel when variacao is positive", () => {
+    expect(resultadoFromVariacao(5)).toBe("Desfavoravel");
   });
 
   it("is Desfavoravel when variacao is exactly 0", () => {

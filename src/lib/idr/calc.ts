@@ -10,14 +10,14 @@ export function calculateIdr(ocorrencias: number, estudantes: number): number | 
 }
 
 export function calculateVariacao(atual: number | null, anterior: number | null): number | null {
-  if (atual === null || anterior === null || atual === 0) return null;
-  return (anterior / atual - 1) * 100;
+  if (atual === null || anterior === null || anterior === 0) return null;
+  return (atual / anterior) * 100 - 100;
 }
 
 export type Resultado = "Favoravel" | "Desfavoravel";
 
-/** IDR menor é melhor (menos ocorrência por estudante) — variação positiva é favorável. */
+/** IDR menor é melhor (menos ocorrência por estudante) — variação negativa é favorável. */
 export function resultadoFromVariacao(variacao: number | null): Resultado | null {
   if (variacao === null) return null;
-  return variacao > 0 ? "Favoravel" : "Desfavoravel";
+  return variacao < 0 ? "Favoravel" : "Desfavoravel";
 }
