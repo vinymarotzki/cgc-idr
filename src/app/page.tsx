@@ -13,6 +13,7 @@ export default function DashboardPage() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [ano, setAno] = useState<number | null>(null);
   const [tab, setTab] = useState<"geral" | "tipo">("geral");
+  const [categoria, setCategoria] = useState<Categoria>("praticaDesportiva");
 
   useEffect(() => {
     fetch("/api/idr/dashboard")
@@ -38,6 +39,19 @@ export default function DashboardPage() {
       particularVariacao: data.geral[year]?.particular?.variacao ?? null,
     }));
   }, [data]);
+
+  const chartDataPorTipo = useMemo(() => {
+    if (!data) return [];
+    return data.anos.map((year) => ({
+      ano: year,
+      estadual: data.porTipo[categoria][year]?.estadual?.idr ?? null,
+      municipal: data.porTipo[categoria][year]?.municipal?.idr ?? null,
+      particular: data.porTipo[categoria][year]?.particular?.idr ?? null,
+      estadualVariacao: data.porTipo[categoria][year]?.estadual?.variacao ?? null,
+      municipalVariacao: data.porTipo[categoria][year]?.municipal?.variacao ?? null,
+      particularVariacao: data.porTipo[categoria][year]?.particular?.variacao ?? null,
+    }));
+  }, [data, categoria]);
 
   if (loadError) {
     return <main className="p-8 text-idr-text">{loadError}</main>;
@@ -83,23 +97,25 @@ export default function DashboardPage() {
         onAnoChange={setAno}
         tab={tab}
         onTabChange={setTab}
+        categoria={categoria}
+        onCategoriaChange={setCategoria}
       />
 
       <div className="space-y-5">
         {tab === "geral" ? (
-          <SummaryCards ano={ano} anoAnterior={anoAnterior} indicadores={data.geral[ano]} />
+          <>
+            <SummaryCards ano={ano} anoAnterior={anoAnterior} indicadores={data.geral[ano]} />
+            <IdrLineChart data={chartData} />
+          </>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {(Object.keys(CATEGORIA_LABELS) as Categoria[]).map((categoria) => (
-              <div key={categoria}>
-                <p className="text-xs text-idr-text-muted mb-2">{CATEGORIA_LABELS[categoria]}</p>
-                <SummaryCards ano={ano} anoAnterior={anoAnterior} indicadores={data.porTipo[categoria][ano]} />
-              </div>
-            ))}
-          </div>
+          <>
+            <SummaryCards ano={ano} anoAnterior={anoAnterior} indicadores={data.porTipo[categoria][ano]} />
+            <IdrLineChart
+              data={chartDataPorTipo}
+              title={`Evolução do IDR por rede — ${CATEGORIA_LABELS[categoria]}`}
+            />
+          </>
         )}
-
-        <IdrLineChart data={chartData} />
 
         <div className="flex flex-wrap gap-3">
           <InfoDialogButton label="Fonte dos dados">
