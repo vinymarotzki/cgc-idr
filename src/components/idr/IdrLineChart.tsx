@@ -40,11 +40,11 @@ export function IdrLineChart({ data }: { data: ChartPoint[] }) {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 4, right: 12, left: -12, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#232B41" vertical={false} />
-            <XAxis dataKey="ano" stroke="#7A82A0" tick={{ fontSize: 12, fill: "#7A82A0" }} tickLine={false} axisLine={{ stroke: "#232B41" }} />
+            <XAxis dataKey="ano" stroke="#FFFFFF" tick={{ fontSize: 12, fill: "#FFFFFF" }} tickLine={false} axisLine={{ stroke: "#232B41" }} />
             <YAxis
-              stroke="#7A82A0"
+              stroke="#FFFFFF"
               domain={["auto", "auto"]}
-              tick={{ fontSize: 12, fill: "#7A82A0" }}
+              tick={{ fontSize: 12, fill: "#FFFFFF" }}
               tickLine={false}
               axisLine={false}
               width={48}
@@ -54,10 +54,10 @@ export function IdrLineChart({ data }: { data: ChartPoint[] }) {
                 background: "#141A29",
                 border: "1px solid #232B41",
                 borderRadius: 8,
-                color: "#E8EAF0",
+                color: "#FFFFFF",
                 fontSize: 13,
               }}
-              labelStyle={{ color: "#7A82A0", marginBottom: 4 }}
+              labelStyle={{ color: "#FFFFFF", marginBottom: 4 }}
               labelFormatter={(ano) => `Ano ${ano}`}
               formatter={(value, name) => [formatIdr(value), name]}
             />
@@ -66,7 +66,7 @@ export function IdrLineChart({ data }: { data: ChartPoint[] }) {
               align="center"
               iconType="circle"
               iconSize={9}
-              wrapperStyle={{ paddingTop: 16, fontSize: 13, color: "#E8EAF0" }}
+              wrapperStyle={{ paddingTop: 16, fontSize: 13, color: "#FFFFFF" }}
             />
             {SERIES.map((series) => (
               <Line
