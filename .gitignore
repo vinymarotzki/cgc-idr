@@ -1,5 +1,13 @@
 # Worktrees isolados de execução de plano (subagent-driven-development)
 .worktrees/
 
-.vercel
+# Next.js & Node
+.next/
+node_modules/
 .env*
+*.db
+.DS_Store
+dist/
+.vercel/
+*.tsbuildinfo
+*.log
