@@ -50,14 +50,9 @@ export default function DashboardPage() {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center gap-5 p-6 text-center">
         <span className="h-14 w-14 sm:h-20 sm:w-20 rounded-full border-4 sm:border-[6px] border-idr-border border-t-idr-estadual animate-spin" />
-        <div className="space-y-2">
-          <h1 className="text-base sm:text-xl text-idr-text uppercase tracking-wide font-semibold">
-            Carregando IDR…
-          </h1>
-          <p className="text-xs sm:text-sm text-idr-text-muted">
-            Sincronizando dados do canal 36602
-          </p>
-        </div>
+        <h1 className="text-base sm:text-xl text-idr-text uppercase tracking-wide font-semibold">
+          Carregando IDR…
+        </h1>
       </main>
     );
   }
