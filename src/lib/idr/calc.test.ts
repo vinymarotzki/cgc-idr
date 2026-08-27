@@ -3,7 +3,7 @@ import { calculateIdr, calculateVariacao, resultadoFromVariacao } from "./calc";
 
 describe("calculateIdr", () => {
   it("applies the IDR formula", () => {
-    expect(calculateIdr(1073, 42260)).toBeCloseTo(2539.0, 1);
+    expect(calculateIdr(1073, 42260)).toBeCloseTo(253.9, 1);
   });
 
   it("returns null when estudantes is 0", () => {

@@ -1,12 +1,12 @@
 /**
- * IDR = (ocorrências ÷ estudantes) × 100.000. Puro — sem rede, sem banco —
+ * IDR = (ocorrências ÷ estudantes) × 10.000. Puro — sem rede, sem banco —
  * pra poder testar a fórmula e as regras de variação/resultado isoladas do
  * resto do sistema.
  */
 
 export function calculateIdr(ocorrencias: number, estudantes: number): number | null {
   if (!estudantes) return null;
-  return (ocorrencias / estudantes) * 100000;
+  return (ocorrencias / estudantes) * 10000;
 }
 
 export function calculateVariacao(atual: number | null, anterior: number | null): number | null {

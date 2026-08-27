@@ -45,8 +45,8 @@ describe("buildDashboardPayload", () => {
 
   it("computes IDR per ano/rede", () => {
     const payload = buildDashboardPayload(rows);
-    expect(payload.geral[2024].estadual.idr).toBeCloseTo(2796.21, 1);
-    expect(payload.geral[2025].estadual.idr).toBeCloseTo(2539.0, 1);
+    expect(payload.geral[2024].estadual.idr).toBeCloseTo(279.62, 1);
+    expect(payload.geral[2025].estadual.idr).toBeCloseTo(253.9, 1);
   });
 
   it("has null variacao/resultado on the first available ano", () => {
@@ -73,7 +73,7 @@ describe("buildDashboardPayload", () => {
     const praticaDesportiva2025 = payload.porTipo.praticaDesportiva[2025].estadual;
     expect(praticaDesportiva2025.ocorrencias).toBe(80);
     expect(praticaDesportiva2025.estudantes).toBe(42260);
-    expect(praticaDesportiva2025.idr).toBeCloseTo((80 / 42260) * 100000, 5);
+    expect(praticaDesportiva2025.idr).toBeCloseTo((80 / 42260) * 10000, 5);
   });
 
   it("preserves rede's anterior IDR when skipping a gap ano with no data", () => {
