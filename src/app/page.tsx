@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Controls } from "@/components/idr/Controls";
 import { SummaryCards } from "@/components/idr/SummaryCards";
 import { IdrLineChart } from "@/components/idr/IdrLineChart";
-import type { Categoria, DashboardPayload, Rede } from "@/lib/idr/types";
+import type { Categoria, DashboardPayload } from "@/lib/idr/types";
 
 const CATEGORIA_LABELS: Record<Categoria, string> = {
   praticaDesportiva: "Prática desportiva",
@@ -17,7 +17,6 @@ export default function DashboardPage() {
   const [data, setData] = useState<DashboardPayload | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [ano, setAno] = useState<number | null>(null);
-  const [rede, setRede] = useState<Rede>("estadual");
   const [tab, setTab] = useState<"geral" | "tipo">("geral");
 
   useEffect(() => {
@@ -81,21 +80,19 @@ export default function DashboardPage() {
         anos={data.anos}
         ano={ano}
         onAnoChange={setAno}
-        rede={rede}
-        onRedeChange={setRede}
         tab={tab}
         onTabChange={setTab}
       />
 
       <div className="space-y-5">
         {tab === "geral" ? (
-          <SummaryCards rede={rede} ano={ano} indicador={data.geral[ano][rede]} />
+          <SummaryCards ano={ano} indicadores={data.geral[ano]} />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {(Object.keys(CATEGORIA_LABELS) as Categoria[]).map((categoria) => (
               <div key={categoria}>
                 <p className="text-xs text-idr-text-muted mb-2">{CATEGORIA_LABELS[categoria]}</p>
-                <SummaryCards rede={rede} ano={ano} indicador={data.porTipo[categoria][ano][rede]} />
+                <SummaryCards ano={ano} indicadores={data.porTipo[categoria][ano]} />
               </div>
             ))}
           </div>
