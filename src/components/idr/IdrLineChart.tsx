@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import type { Rede } from "@/lib/idr/types";
 
 interface ChartPoint {
@@ -17,18 +18,54 @@ interface ChartPoint {
   estadual: number | null;
   municipal: number | null;
   particular: number | null;
+  estadualVariacao: number | null;
+  municipalVariacao: number | null;
+  particularVariacao: number | null;
 }
 
-const SERIES: { key: Rede; label: string; color: string }[] = [
-  { key: "estadual", label: "REE", color: "#22C55E" },
-  { key: "municipal", label: "REME", color: "#EF4444" },
-  { key: "particular", label: "RPE", color: "#F5A623" },
+const SERIES: { key: Rede; variacaoKey: keyof ChartPoint; label: string; color: string }[] = [
+  { key: "estadual", variacaoKey: "estadualVariacao", label: "REE", color: "#22C55E" },
+  { key: "municipal", variacaoKey: "municipalVariacao", label: "REME", color: "#EF4444" },
+  { key: "particular", variacaoKey: "particularVariacao", label: "RPE", color: "#F5A623" },
 ];
 
 function formatIdr(value: unknown): string {
   return typeof value === "number"
     ? value.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-    : String(value ?? "—");
+    : "—";
+}
+
+function formatVariacao(value: unknown): string {
+  if (typeof value !== "number") return "—";
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${formatIdr(value)}%`;
+}
+
+interface ChartTooltipProps {
+  active?: boolean;
+  label?: number | string;
+  payload?: { dataKey?: string | number; name?: NameType; value?: ValueType; color?: string; payload: ChartPoint }[];
+}
+
+function ChartTooltip({ active, label, payload }: ChartTooltipProps) {
+  if (!active || !payload || payload.length === 0) return null;
+  const point = payload[0].payload;
+
+  return (
+    <div className="rounded-lg border border-idr-border bg-idr-card p-3 text-sm">
+      <p className="text-idr-text-muted mb-2">Ano {label}</p>
+      <div className="space-y-1.5">
+        {SERIES.map((series) => (
+          <div key={series.key} className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: series.color }} />
+            <span className="text-idr-text">{series.label}:</span>
+            <span className="text-idr-text font-medium">{formatIdr(point[series.key])}</span>
+            <span className="text-idr-text-muted">({formatVariacao(point[series.variacaoKey])})</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function IdrLineChart({ data }: { data: ChartPoint[] }) {
@@ -49,18 +86,7 @@ export function IdrLineChart({ data }: { data: ChartPoint[] }) {
               axisLine={false}
               width={48}
             />
-            <Tooltip
-              contentStyle={{
-                background: "#141A29",
-                border: "1px solid #232B41",
-                borderRadius: 8,
-                color: "#FFFFFF",
-                fontSize: 13,
-              }}
-              labelStyle={{ color: "#FFFFFF", marginBottom: 4 }}
-              labelFormatter={(ano) => `Ano ${ano}`}
-              formatter={(value, name) => [formatIdr(value), name]}
-            />
+            <Tooltip content={<ChartTooltip />} />
             <Legend
               verticalAlign="bottom"
               align="center"

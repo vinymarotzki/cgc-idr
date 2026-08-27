@@ -39,6 +39,9 @@ export default function DashboardPage() {
       estadual: data.geral[year]?.estadual?.idr ?? null,
       municipal: data.geral[year]?.municipal?.idr ?? null,
       particular: data.geral[year]?.particular?.idr ?? null,
+      estadualVariacao: data.geral[year]?.estadual?.variacao ?? null,
+      municipalVariacao: data.geral[year]?.municipal?.variacao ?? null,
+      particularVariacao: data.geral[year]?.particular?.variacao ?? null,
     }));
   }, [data]);
 
