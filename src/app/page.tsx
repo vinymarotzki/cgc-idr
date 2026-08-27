@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Controls } from "@/components/idr/Controls";
 import { SummaryCards } from "@/components/idr/SummaryCards";
 import { IdrLineChart } from "@/components/idr/IdrLineChart";
-import { FonteDadosDialog } from "@/components/idr/FonteDadosDialog";
+import { InfoDialogButton } from "@/components/idr/InfoDialogButton";
 import type { Categoria, DashboardPayload } from "@/lib/idr/types";
 import { CATEGORIA_LABELS } from "@/lib/idr/labels";
 
@@ -101,7 +101,41 @@ export default function DashboardPage() {
 
         <IdrLineChart data={chartData} />
 
-        <FonteDadosDialog />
+        <div className="flex flex-wrap gap-3">
+          <InfoDialogButton label="Fonte dos dados">
+            <p>
+              O Índice de Desempenho Reativo (IDR) será calculado por amostragem, considerando o
+              quantitativo de ocorrências atendidas pelo Corpo de Bombeiros Militar de Mato Grosso do
+              Sul (CBMMS) e o número de estudantes da capital do Estado. Para a composição do índice,
+              serão consideradas as quatro categorias de ocorrências com maior incidência na capital,
+              conforme os dados registrados pelo Centro Integrado de Operações de Segurança (CIOPS) da
+              Secretaria de Estado de Justiça e Segurança Pública de Mato Grosso do Sul (SEJUSP/MS). O
+              quantitativo de estudantes utilizado no cálculo é proveniente da plataforma GeoReDUS,
+              desenvolvida em conjunto pela Frente Nacional de Prefeitas e Prefeitos (FNP), Centro de
+              Estudos da Metrópole (CEM/USP), Instituto ORI:ORO e GIZ, no âmbito da Rede para
+              Desenvolvimento Urbano Sustentável (ReDUS). A plataforma utiliza dados oficiais do
+              Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (INEP) para a
+              composição de seus indicadores.
+            </p>
+          </InfoDialogButton>
+
+          <InfoDialogButton label="Descritivo do IDR">
+            <p>
+              O Índice de Desempenho Reativo (IDR) é um indicador calculado por amostragem que
+              mensura a incidência de ocorrências em relação ao número de estudantes, sendo
+              utilizado para avaliar os resultados das ações de segurança desenvolvidas pela CGC no
+              ambiente escolar.
+            </p>
+            <p>
+              O índice permite classificar os resultados em duas categorias: "favorável" e "não
+              favorável", de acordo com os parâmetros estabelecidos para a avaliação.
+            </p>
+            <p>
+              O IDR é calculado pela seguinte fórmula: IDR = (número de ocorrências ÷ número de
+              estudantes) × 10.000.
+            </p>
+          </InfoDialogButton>
+        </div>
       </div>
 
       {!data.syncOk && (
