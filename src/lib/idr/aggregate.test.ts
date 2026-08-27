@@ -75,4 +75,52 @@ describe("buildDashboardPayload", () => {
     expect(praticaDesportiva2025.estudantes).toBe(42260);
     expect(praticaDesportiva2025.idr).toBeCloseTo((80 / 42260) * 10000, 5);
   });
+
+  it("preserves rede's anterior IDR when skipping a gap ano with no data", () => {
+    // Simulate: estadual has data in 2024 and 2026, but NOT 2025
+    //          municipal has data in 2025 (so 2025 stays in anos list)
+    const testRows: IdrSnapshotRow[] = [
+      row({
+        ano: 2024,
+        rede: "estadual",
+        ocorrenciasTotal: 100,
+        estudantes: 1000,
+      }),
+      row({
+        ano: 2025,
+        rede: "municipal",
+        ocorrenciasTotal: 50,
+        estudantes: 500,
+      }),
+      row({
+        ano: 2026,
+        rede: "estadual",
+        ocorrenciasTotal: 120,
+        estudantes: 1000,
+      }),
+    ];
+
+    const payload = buildDashboardPayload(testRows);
+
+    // Confirm anos list includes all three years
+    expect(payload.anos).toEqual([2024, 2025, 2026]);
+
+    // At ano 2024, estadual should have a real idr
+    const estadual2024 = payload.geral[2024].estadual;
+    expect(estadual2024.idr).not.toBeNull();
+    const idr2024 = estadual2024.idr;
+
+    // At ano 2025, estadual has no data -> idr should be null, variacao should be null
+    const estadual2025 = payload.geral[2025].estadual;
+    expect(estadual2025.idr).toBeNull();
+    expect(estadual2025.variacao).toBeNull();
+
+    // At ano 2026, estadual should have a real idr AND variacao computed against 2024 (NOT null)
+    const estadual2026 = payload.geral[2026].estadual;
+    expect(estadual2026.idr).not.toBeNull();
+    expect(estadual2026.variacao).not.toBeNull();
+    // Verify variacao is computed against 2024's idr, not null
+    const expected2026Variacao = ((estadual2026.idr - idr2024) / idr2024) * 100;
+    expect(estadual2026.variacao).toBeCloseTo(expected2026Variacao, 2);
+  });
 });
