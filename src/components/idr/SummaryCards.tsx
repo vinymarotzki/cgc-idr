@@ -53,7 +53,9 @@ export function SummaryCards({
                   <p className="text-base sm:text-lg font-semibold">{formatNumber(indicador.idr)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-idr-text-muted mb-1">Variação</p>
+                  <p className="text-xs text-idr-text-muted mb-1">
+                    Variação {anoAnterior !== null ? `(${anoAnterior} → ${ano})` : ""}
+                  </p>
                   <p className={`text-base sm:text-lg font-semibold ${corResultado}`}>
                     {formatPercent(indicador.variacao)}
                   </p>
