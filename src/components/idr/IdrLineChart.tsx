@@ -30,8 +30,6 @@ const SERIES: { key: Rede; variacaoKey: keyof ChartPoint; label: string; color: 
   { key: "particular", variacaoKey: "particularVariacao", label: "RPE", color: "#F5A623" },
 ];
 
-const META_COLOR = "#3B82F6";
-
 function formatIdr(value: unknown): string {
   return typeof value === "number"
     ? value.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -116,17 +114,6 @@ export function IdrLineChart({
                 connectNulls
               />
             ))}
-            <Line
-              type="linear"
-              dataKey="meta"
-              name="CBM"
-              stroke={META_COLOR}
-              strokeWidth={2}
-              strokeDasharray="6 4"
-              dot={false}
-              activeDot={false}
-              legendType="circle"
-            />
           </LineChart>
         </ResponsiveContainer>
       </div>

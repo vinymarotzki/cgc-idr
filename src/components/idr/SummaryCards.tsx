@@ -49,9 +49,7 @@ export function SummaryCards({
               <p className="text-sm text-idr-text mb-3">{REDE_LABELS[rede]}</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <div>
-                  <p className="text-xs text-idr-text-muted mb-1">
-                    IDR / {REDE_SIGLA[rede]} {anoAnterior !== null ? `(${anoAnterior} → ${ano})` : ""}
-                  </p>
+                  <p className="text-xs text-idr-text-muted mb-1">IDR / {REDE_SIGLA[rede]}</p>
                   <p className="text-base sm:text-lg font-semibold">{formatNumber(indicador.idr)}</p>
                 </div>
                 <div>
