@@ -20,6 +20,22 @@ const config: Config = {
           particular: "#F5A623",
         },
       },
+      keyframes: {
+        "signal-dot": {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.75", transform: "scale(1.06)" },
+        },
+        "signal-wave": {
+          "0%": { opacity: "0.25" },
+          "20%": { opacity: "1" },
+          "55%": { opacity: "0.25" },
+          "100%": { opacity: "0.25" },
+        },
+      },
+      animation: {
+        "signal-dot": "signal-dot 1.8s ease-in-out infinite",
+        "signal-wave": "signal-wave 1.8s ease-in-out infinite",
+      },
     },
   },
   plugins: [],
