@@ -5,6 +5,7 @@ import { Controls } from "@/components/idr/Controls";
 import { SummaryCards } from "@/components/idr/SummaryCards";
 import { IdrLineChart } from "@/components/idr/IdrLineChart";
 import { InfoDialogButton } from "@/components/idr/InfoDialogButton";
+import { Loading } from "@/components/Loading";
 import type { Categoria, DashboardPayload } from "@/lib/idr/types";
 import { CATEGORIA_LABELS } from "@/lib/idr/labels";
 
@@ -63,11 +64,8 @@ export default function DashboardPage() {
 
   if (!data) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center gap-5 p-6 text-center">
-        <span className="h-14 w-14 sm:h-20 sm:w-20 rounded-full border-4 sm:border-[6px] border-idr-border border-t-idr-estadual animate-spin" />
-        <h1 className="text-base sm:text-xl text-idr-text uppercase tracking-wide font-semibold">
-          Carregando IDR…
-        </h1>
+      <main className="min-h-screen flex items-center justify-center p-6">
+        <Loading label="Carregando IDR…" />
       </main>
     );
   }
